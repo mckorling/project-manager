@@ -42,6 +42,7 @@ export default async function middleware(req, res) {
     // can't run prisma
     try {
         // successfully went to user's requested page
+        // jwt is an object and the value property is the token
         await verifyJWT(jwt.value);
         return NextResponse.next();
     } catch (e) {
