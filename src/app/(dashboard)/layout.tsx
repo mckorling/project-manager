@@ -1,14 +1,17 @@
-import GlassPane from "@/components/GlassPane"
-import "@/styles/global.css"
+import '@/styles/global.css'
+import GlassPane from "@/components/GlassPane";
 
 export default function DashboardRootLayout({children} : {
     children: any
 }) {
     return (
         <html lang="en">
-            <head></head>
+            <head />
             <body className="h-screen w-screen rainbow-mesh p-6">
-                <GlassPane className="w-full h-full flex items-center justify-center">{children}</GlassPane>
+                <GlassPane
+                    className="w-full h-full flex items-center justify-center">
+                    {children}
+                </GlassPane>
             </body>
         </html>
     )
