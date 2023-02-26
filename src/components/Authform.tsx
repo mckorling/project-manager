@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { register, signin } from "@/lib/api";
+import { User } from "@prisma/client";
 
 const registerContent = {
     linkurl: "/signin",
@@ -23,9 +24,9 @@ const signinContent = {
     buttonText: "Sign In"
 };
 
-const intial = {email: "", password: "", firstName: "", lastName: ""};
+const intial: Partial<User> = {email: "", password: "", firstName: "", lastName: ""};
 
-const AuthForm = ({mode}) => {
+const AuthForm = ({mode} : { mode: "register" | "signin" }) => {
     const [formState, setFormState] = useState({...intial});
 
     const router = useRouter();

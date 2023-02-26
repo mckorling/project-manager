@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import {NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose"; // using jose because it works in edge runtimes
 const PUBLIC_FILE = /\.(.*)$/;
 
@@ -9,7 +9,7 @@ const PUBLIC_FILE = /\.(.*)$/;
 // users will be able to access appropriate pages only by checking for jwt in cookies and verifying them
 
 // had to make this again here as the other one is in a file with bcrypt which is not supported on edge runtimes
-const verifyJWT = async (jwt) => {
+const verifyJWT = async (jwt: string) => {
     const { payload } = await jwtVerify(
         jwt,
         new TextEncoder().encode(process.env.JWT_SECRET)
@@ -18,7 +18,7 @@ const verifyJWT = async (jwt) => {
     return payload;
 };
 
-export default async function middleware(req, res) {
+export default async function middleware(req:NextRequest, res:NextResponse) {
     const { pathname } = req.nextUrl;
     if ( // free to go to these sites
         pathname.startsWith("/_next") || // this is related to developement
@@ -31,7 +31,7 @@ export default async function middleware(req, res) {
         return NextResponse.next();
     }
 
-    const jwt = req.cookies.get(process.env.COOKIE_NAME);
+    const jwt = req.cookies.get(process.env.COOKIE_NAME as string);
 
     if (!jwt) {
         // set the path name to where the user will be redirect if they don't have valid jwt

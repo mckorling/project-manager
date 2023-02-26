@@ -29,8 +29,8 @@ const getData = async () => {
 
 // takes in tasks so that this componenet can be reused to show tasks when a project is selected
 const TaskCard = async ({ title, tasks } : {
-    title: string,
-    tasks: Task[]
+    title?: string,
+    tasks?: Task[]
 }) => {
     // if there are tasks passed in as prop, then it is used to display ALL tasks for a project
     // if not, it is for the dashboard and calls the above function

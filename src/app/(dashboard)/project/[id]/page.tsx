@@ -5,7 +5,14 @@ import { cookies } from "next/headers";
 
 // this is a dynamic page, we know this because the parent folder has []
 
-const getData = async (id: any) => {
+// added for params type
+type ProjectPageParams = {
+    params: {
+        id: string
+    }
+}
+
+const getData = async (id: string) => {
     const user = await getUserFromCookie(cookies());
     const project = await db.project.findFirst({
         where: { id, ownerId: user?.id },
@@ -21,12 +28,13 @@ const getData = async (id: any) => {
 
 
 // params automatically get passed in because it's a dynamic page
-export default async function ProjectPage({ params }) {
+export default async function ProjectPage({ params }: ProjectPageParams) {
     const project = await getData(params.id);
 
     return (
         <div className="h-full overflow-y-auto pr-6 w-1/1">
             {/* get an error because typescipt doesn't know how to handle ones that return promises */}
+            {/* @ts-expect-error Server Component */}
             <TaskCard tasks={project.tasks} title={project.name} />
         </div>
     );

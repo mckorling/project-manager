@@ -38,6 +38,7 @@ export default async function Page() {
                 <div className="flex-1 grow flex">
                     {/* this Suspense also creates a delay in Greetings, which shows that we have control over what loads first */}
                     <Suspense fallback={<GreetingsSkeleton />}>
+                        {/* @ts-expect-error Server Component */}
                         <Greetings />
                     </Suspense>
                 </div>
@@ -52,6 +53,7 @@ export default async function Page() {
                     <div className="w-1/3 p-3"><NewProject /></div>
                 </div>
                 <div className="mt-6 flex-2 grow w-full flex">
+                    {/* @ts-expect-error Server Component */}
                     <div className="w-full"><TaskCard /></div>
                 </div>
             </div>

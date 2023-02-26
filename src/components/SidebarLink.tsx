@@ -23,7 +23,7 @@ const SidebarLink = ( { link } : {
         isActive = true
     }
 
-    const Icon = icons[link.icon];
+    const Icon = icons[link.icon as keyof typeof icons];
     return (
         <Link href={link.link} className="w-full flex justify-center items-center">
             <Icon 

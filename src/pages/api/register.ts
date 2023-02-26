@@ -26,7 +26,7 @@ export default async function register(
         const jwt = await createJWT(user);
         res.setHeader(
             "Set-Cookie", // tells browswer when it gets the response back to set the following cookies
-            serialize(process.env.COOKIE_NAME, jwt, {
+            serialize(process.env.COOKIE_NAME as string, jwt, {
                 httpOnly: true, // can't access cookies via js
                 path: "/", 
                 maxAge: 60 * 60 * 24 * 7, // cookie valid for a week.

@@ -1,6 +1,7 @@
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { SignJWT, jwtVerify } from "jose";
+import { RequestCookies, RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { db } from "./db";
 
 export const hashPassword = (password: string) => bcrypt.hash(password, 10); // asynchronous, implicit return
@@ -43,10 +44,10 @@ export const validateJWT = async (jwt: string) => {
 // Getting the JWT from cookies
 // check that user is in the database, extra step to guarantee validity
 // cookies is coming from Next.js library 
-export const getUserFromCookie = async (cookies) => {
-    const jwt = cookies.get(process.env.COOKIE_NAME);
+export const getUserFromCookie = async (cookies: RequestCookies) => {
+    const jwt = cookies.get(process.env.COOKIE_NAME as string) as RequestCookie;
 
-    const { id } = await validateJWT(jwt.value);
+    const { id } = await validateJWT(jwt.value as string);
     
     // db is a cached instance of prisma
     const user = await db.user.findUnique({

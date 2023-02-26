@@ -1,12 +1,20 @@
+import { User, Project } from "@prisma/client";
+
 // these are going to be using client components
 // unit test seperately, they don't need to be set up with components
 // separation of concern- no ui or anything like that going on here
 // this might be a reusable function
 
-import { User } from "@prisma/client";
+type FetcherProps = {
+    url: string,
+    method: string,
+    body: Partial<User> | Partial<Project>,
+    json?: boolean
+}
+
 
 // use fetch to get and mutate data
-export const fetcher = async ({url, method, body, json=true}) => {
+export const fetcher = async ({url, method, body, json=true} : FetcherProps) => {
     const res = await fetch(url, {
         method,
         ...(body && {body: JSON.stringify(body)}),
