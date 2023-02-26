@@ -3,6 +3,8 @@
 // separation of concern- no ui or anything like that going on here
 // this might be a reusable function
 
+import { User } from "@prisma/client";
+
 // use fetch to get and mutate data
 export const fetcher = async ({url, method, body, json=true}) => {
     const res = await fetch(url, {
@@ -25,7 +27,7 @@ export const fetcher = async ({url, method, body, json=true}) => {
 };
 
 // Allow a user to register
-export const register = async (user) => {
+export const register = async (user: User) => {
     return fetcher({
         url: "/api/register",
         method: "POST",
@@ -35,11 +37,21 @@ export const register = async (user) => {
 };
 
 // Allow a user to signin
-export const signin = async (user) => {
+export const signin = async (user: User) => {
     return fetcher({
         url: "/api/signin",
         method: "POST",
         body: user,
         json: false,
+    });
+};
+
+// will be called in a client component
+// looking at schema, a new project really only needs a name
+export const createNewProject = (name: string) => {
+    return fetcher({
+        url: "/api/project", // goes to pages/api/project which does the db work
+        method: "POST",
+        body: { name },
     });
 };
