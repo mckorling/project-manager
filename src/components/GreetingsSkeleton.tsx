@@ -1,5 +1,7 @@
 import Card from "./Card";
 
+// creating empty divs with spacing and backgrounds
+// they make the general shape of what we are trying to make
 const GreetingsSkeleton = () => {
     return (
         <Card className="w-full py-14">

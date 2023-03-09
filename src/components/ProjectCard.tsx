@@ -3,12 +3,22 @@ import { Prisma } from "@prisma/client";
 import Card from "./Card";
 import clsx from "clsx";
 
+// Prisma has the typesafe info we need for a project
+// validator: takes a genaric, like an argument for a type
+// it takes Prisma.ProjectArgs
+// ProjectArgs- arguments needed to make a Project (name, ownerId)
+// ProjectArgs is generated from the schema
+// use 'Project' because we have a Projects table
 const projectWithTasks = Prisma.validator<Prisma.ProjectArgs>()({
     include: { tasks: true },
+    // Projects has a relationship to Tasks
 });
 
+// typescript magic
 type ProjectWithTasks = Prisma.ProjectGetPayload<typeof projectWithTasks>;
 
+// there is a popular library with dates called moment.js (?)
+// but it is too large and not really needed here
 const formatDate = (date: string | number | Date) =>
     new Date(date).toLocaleDateString("en-us", {
         weekday: "long",
@@ -17,7 +27,11 @@ const formatDate = (date: string | number | Date) =>
         day: "numeric",
     });
 
+// Functional Component
+// all of this works means we don't need to write our own Project interface
+// it's useful to do it this way because it will adapt to schema changes automatically
 const ProjectCard: FC<{ project: ProjectWithTasks }> = ({ project }) => {
+    // progress bar calculation for a project
     const completedCount = project.tasks.filter(
         (t) => t.status === "COMPLETED"
     ).length;
@@ -39,7 +53,10 @@ const ProjectCard: FC<{ project: ProjectWithTasks }> = ({ project }) => {
                 </span>
             </div>
             <div>
+                {/* background div that is 100% of the way*/}
                 <div className="w-full h-2 bg-violet-200 rounded-full mb-2">
+                {/* darker bar that shows percent completed */}
+                {/* tailwind statically reads the classes so the width is handled in the style tag */}
                 <div
                     className={clsx(
                     "h-full text-center text-xs text-white bg-violet-600 rounded-full"

@@ -54,9 +54,11 @@ export const signin = async (user: User) => {
     });
 };
 
+// will be called in a client component
+// looking at schema, a new project really only needs a name
 export const createNewProject = (name: string) => {
     return fetcher({
-        url: "/api/project",
+        url: "/api/project", // goes to pages/api/project which does the db work
         method: "POST",
         body: { name },
     });

@@ -1,9 +1,11 @@
 import TaskCard from "@/components/TaskCard";
 import { getUserFromCookie } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
 
+// this is a dynamic page, we know this because the parent folder has []
+
+// added for params type
 type ProjectPageParams = {
     params: {
         id: string
@@ -11,7 +13,7 @@ type ProjectPageParams = {
 }
 
 const getData = async (id: string) => {
-    const user = await getUserFromCookie(cookies() as RequestCookies);
+    const user = await getUserFromCookie(cookies());
     const project = await db.project.findFirst({
         where: { id, ownerId: user?.id },
         include: {
@@ -21,7 +23,11 @@ const getData = async (id: string) => {
 
     return project;
 };
+// projects come in server side
+// so we can create a new project but it won't automatically load
 
+
+// params automatically get passed in because it's a dynamic page
 export default async function ProjectPage({ params }: ProjectPageParams) {
     const project = await getData(params.id);
 

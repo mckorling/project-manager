@@ -4,7 +4,7 @@ import Button from "./Button";
 import Card from "./Card";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { register, signin } from "@/lib/api";
 import { User } from "@prisma/client";
 
@@ -39,7 +39,7 @@ const AuthForm = ({mode} : { mode: "register" | "signin" }) => {
             await signin(formState)
         }
         setFormState(intial)
-        router.replace("/home") 
+        router.replace("/home") // can't hit back to go back
     }
 
     const content = mode === "register" ? registerContent : signinContent
