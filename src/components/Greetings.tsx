@@ -3,18 +3,16 @@ import { cookies } from "next/headers";
 import Button from "./Button";
 import Card from "./Card";
 import { delay } from "@/lib/async";
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 
-// Server component where we just try to get the user
-
-// get user and verify they exist
 const getData = async () => {
     await delay(5000);
-    const user = await getUserFromCookie(cookies()); // we made this
+    const user = await getUserFromCookie(cookies() as RequestCookies);
     return user;
 };
 
 const Greetings = async () => {
-    await delay(2000); // super exagerated to show loading
+    await delay(2000); 
     const user = await getData();
 
     return (

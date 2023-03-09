@@ -1,6 +1,5 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-// npx prisma migrate dev
 
 generator client {
   provider = "prisma-client-js"
@@ -34,11 +33,11 @@ model Project {
   ownerId     String
   owner       User      @relation(fields: [ownerId], references: [id])
   due         DateTime?
-  deleted     Boolean   @default(false) // soft delete (if an account is restored, the project info is still there)
+  deleted     Boolean   @default(false)
   tasks       Task[]
 
-  @@unique([ownerId, name]) // can't have 2 projects with the same name
-  @@index([ownerId, id]) // will write an index to find a project with an id
+  @@unique([ownerId, name])
+  @@index([ownerId, id])
 }
 
 enum TASK_STATUS {

@@ -5,8 +5,6 @@ import Modal from "react-modal";
 import Button from "./Button";
 import Input from "./Input";
 
-// Modal.setAppElement("#modal"); has something to do with assistive screen readers, but cause an error by including
-
 const NewProject = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const openModal = () => setIsOpen(true);
@@ -15,11 +13,10 @@ const NewProject = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await createNewProject(name); // goes to create new project in api.ts
+        await createNewProject(name); 
         closeModal();
     };
-// Portal: render any div anywhere, it is great for Modals
-// Modals need to be on the root but may not want to be rendered on root, so Portal is good
+
     return (
         <div className="px-6 py-8 hover:scale-105 transition-all ease-in-out duration-200 flex justify-center items-center">
             <Button onClick={() => openModal()}>+ New Project</Button>
